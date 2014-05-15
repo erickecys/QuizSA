@@ -25,3 +25,25 @@ Jose Miguel Villatoro Hidalgo  | 200819119
 
 #### 04 Crear Cuenta `BPMN`
 ![04_Crear_Cuenta.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/04_Crear_Cuenta.png "04_Crear_Cuenta")
+
+#### 05 Catedratico Crear Curso `BPMN`
+![05_Catedratico_Crear_Curso.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/05_Catedratico_Crear_Curso.png "05_Catedratico_Crear_Curso")
+
+#### 06 Catedratico Crear Examen `BPMN`
+![06_Catedratico_Crear_Examen.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/06_Catedratico_Crear_Examen.png "06_Catedratico_Crear_Examen")
+
+#### 07 Catedratico Ver Resultados `BPMN`
+![07_Catedratico_Ver_Resultados.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/07_Catedratico_Ver_Resultados.png "07_Catedratico_Ver_Resultados")
+
+#### 08 Estudiante Asignar Curso `BPMN`
+![08_Estudiante_Asignar_Curso.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/08_Estudiante_Asignar_Curso.png "08_Estudiante_Asignar_Curso")
+
+
+
+
+
+
+
+
+
+
