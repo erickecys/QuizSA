@@ -46,8 +46,8 @@ Jose Miguel Villatoro Hidalgo  | 200819119
 
 
 ## ENTIDAD RELACIÓN
-#### 10 Estudiante Ver Resultados `BPMN`
-![Entidad_Relacion.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/entidad-relacion/E-R.png "Entidad_Relacion")
+#### Entidad Relación `BPMN`
+![Entidad_Relacion.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/entidad-relacion/ER.png "Entidad_Relacion")
 
 
 
