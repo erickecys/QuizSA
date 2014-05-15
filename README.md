@@ -45,6 +45,9 @@ Jose Miguel Villatoro Hidalgo  | 200819119
 ![10_Estudiante_Ver_Resultados.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/10_Estudiante_Ver_Resultados.png "10_Estudiante_Ver_Resultados")
 
 
+## ENTIDAD RELACIÓN
+#### 10 Estudiante Ver Resultados `BPMN`
+![Entidad_Relacion.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/entidad-relacion/E-R.png "Entidad_Relacion")
 
 
 
