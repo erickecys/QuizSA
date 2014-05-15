@@ -13,8 +13,12 @@ David Estuardo Veliz Robles  | 200815460
 Jose Miguel Villatoro Hidalgo  | 200819119
 
 ## Procesos BPMN
+
 #### 01 Flujo General Catedratico `BPMN`
 ![01_Flujo_General_Catedratico.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/01_Flujo_General_Catedratico.png "01_Flujo_General_Catedratico")
+
+#### 02 Flujo General Estudiante `BPMN`
+![02_Flujo_General_Estudiante.png](https://raw.github.com/erickecys/QuizSA/master/QuizAS/imagenes/02_Flujo_General_Estudiante.png "02_Flujo_General_Estudiante")
 
 
               
