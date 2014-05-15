@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/Plantilla.css">
+<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script> 
+<script type="text/javascript" src="js/xui-2.3.2.js"></script>
+<script type="text/javascript" src="js/Globales.js"></script>
+<script type="text/javascript">
+	
+		function callWebService(Nombre,Apellido,Registro,Clave,Genero, Rol){     
+				var url = ip+"Registro.php?";
+			    x$.data = {}; 
+			    x$("#html_element_name").xhr((url),
+			       { method:'post',
+			         headers:{'Content-Type':'application/xml'},
+			         data:'Nombre='+Nombre+'&Apellido='+Apellido+'&Registro='+Registro+'&Clave='+Clave+'&Genero='+Genero+'&Rol='+Rol,
+			         error: function(){//handle errors here
+			         alert('error');
+			          },
+			         callback: function(){
+			         var json = JSON.stringify(eval("(" + this.responseText + ")"));
+					 var obj = JSON.parse(json);
+					 if(obj.success!=1){
+		            	var div = document.getElementById ("Msj");
+	  					div.innerHTML = "<h4><font color='red'>No se pudo registrar<br> verifique su conexion</font></h4>";
+		             }else{
+			         		if (confirm('Quiere registrar mas personas??')) {
+							    var div = document.getElementById ("Msj");
+	  							div.innerHTML = "";
+	  							document.Nombre.value = "";
+	  							document.Apellido.value = "";
+	  							document.Usuario.value = "";
+	  							document.Clave1.value = "";
+	  							document.Clave2.value = "";
+							} else {
+							    location.href = "index.html";
+							}
+				           }
+				           }
+				       });
+				   
+			    }
+		
+		function validar() {
+				txtNombre = document.getElementById("Nombre").value;
+		        txtApellido = document.getElementById("Apellido").value;
+		        txtRegistro = document.getElementById("Usuario").value;
+		        txtClave1 = document.getElementById("Clave1").value;
+		        txtClave2 = document.getElementById("Clave2").value;
+		        txtSexo = document.getElementById("Sexo").value;
+		        txtRol = document.getElementById("Rol").value;
+		        if (txtNombre.length == 0) {
+		            var div = document.getElementById ("Msj");
+			  		div.innerHTML = "<font color='red'>Falta el Nombre</font>";
+				}else
+					if (txtApellido.length == 0) {
+			            var div = document.getElementById ("Msj");
+				  		div.innerHTML = "<font color='red'>Falta el Apellido</font>";
+					}else
+						if (txtRegistro.length == 0) {
+				            var div = document.getElementById ("Msj");
+					  		div.innerHTML = "<font color='red'>Falta el Usuario</font>";
+						}else
+							if (txtClave1.length == 0) {
+					            var div = document.getElementById ("Msj");
+						  		div.innerHTML = "<font color='red'>Falta la clave</font>";
+							}else
+								if (txtClave1 != txtClave2) {
+						            var div = document.getElementById ("Msj");
+							  		div.innerHTML = "<font color='red'>Las claves no son iguales</font>";
+								}else
+									callWebService(txtNombre,txtApellido,txtRegistro, txtClave1, txtSexo, txtRol);
+							
+		    }
+</script>
+<script type="text/javascript" src="js/capcha.js"></script>
+
+      <!-- Wrapping the Recaptcha create method in a javascript function -->
+      <script type="text/javascript">
+         function showRecaptcha(element) {
+           Recaptcha.create("your_public_key", element, {
+             theme: "red",
+             callback: Recaptcha.focus_response_field});
+         }
+      </script>
+
+</head>
+<body background="img/Fondo.jpg">
+<h1>QuizSa <img src="img/Logo.png" width=60px  height=60px></h1>
+	<table border=0>
+		<tr>
+			<td>
+				Nombre
+			</td>
+			<td>
+				<input type="text" id="Nombre" class="Text" >
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Apellido
+			</td>
+			<td>
+				<input type="text" id="Apellido" class="Text">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Usuario
+			</td>
+			<td>
+				<input type="text" id="Usuario" class="Text">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Clave
+			</td>
+			<td>
+				<input type="password" id="Clave1" class="Text">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Validacion<br>
+				de la clave
+			</td>
+			<td>
+				<input type="password" id="Clave2" class="Text">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Genero
+			</td>
+			<td>
+				<select id="Sexo" class="Text">
+				  <option value="2">Masculino</option>
+				  <option value="1">Femenino</option>
+				</select> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Rol
+			</td>
+			<td>
+				<select id="Rol" class="Text">
+				  <option value="1">Catedratico</option>
+				  <option value="2">Estudiante</option>
+				</select> 
+			</td>
+		</tr>
+		
+	</table>
+	<br>
+	<input type="button" id="Aceptar" value="Registrar" onclick='validar()' class="boton">
+			<br>
+			<br>
+			<div id="Msj"></div>
+</body>
+</html>

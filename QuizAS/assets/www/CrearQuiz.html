@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/Plantilla.css">
+<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script> 
+<script type="text/javascript" src="js/xui-2.3.2.js"></script>
+<script type="text/javascript" src="js/Globales.js"></script>
+<script type="text/javascript">
+			
+			var preguntas="";
+			var cont=0;
+			function CuantasPreguntas() {
+				txtNombre = document.getElementById("QC").value;
+				var div = document.getElementById ("Quiz");
+	  			var cuerpo ="";
+	  			for(var i=0; i<txtNombre; i++){
+	  			    var id = "RC"+i;
+	  			    var dis = "Res"+i;
+	  			    var txt = "txt"+i;
+		  			cuerpo = cuerpo + "<br>Pregunta "+i+"<br><textarea id='"+txt+"'></textarea><br>";
+		  			cuerpo = cuerpo + "Cuantas respestas?<br><input type='text' id='"+id+"' class='Conf'>";
+		  			cuerpo = cuerpo + "<input type='button' onclick=\"CuantasRespuestas('"+id+"','"+dis+"','"+txt+"')\" value='Crear'>"
+	  			    cuerpo = cuerpo + "<div id='"+dis+"'></div>"
+	  			    
+	  			}
+	  			div.innerHTML = cuerpo;
+		    }
+		    
+		    function CuantasRespuestas(cant,divs, txt) {
+		        
+				var txtNombre = document.getElementById(cant).value;
+				var div1 = document.getElementById (divs);
+	  			var cuerpo ="<table border=0>";
+	  			cuerpo = cuerpo + "<tr><td>Respuesta</td><td>Pregunta</td></tr>"
+	  			for(var i=0; i<txtNombre; i++){
+	  			   cuerpo = cuerpo + "<tr><td><input type=\"checkbox\" id=\"r"+divs+i+"\"></td>";
+	  			   cuerpo = cuerpo + "<td><input type=\"text\" id=\"p"+divs+i+"\"></td></tr>"
+	  			}
+	  			cuerpo = cuerpo + "</table>";
+	  			cuerpo = cuerpo + "<br><input type='button' onclick=\"Respuestas('"+cant+"','"+divs+"','"+txt+"')\" value='Guardar pregunta'>";
+	  			div1.innerHTML = cuerpo;
+	  			
+		    }
+		    
+		    function Respuestas(cant,divs, txt) {
+		        
+				var txtNombre = document.getElementById(cant).value;
+				var txtArea = document.getElementById(txt).value;
+				var div1 = document.getElementById (divs);
+				var cuerpo = "";
+	  			for(var i=0; i<txtNombre; i++){
+	  			   var valor=1;
+	  			   if(document.getElementById("r"+divs+i).checked==false)
+	  			       valor = 0;
+	  			   cuerpo = cuerpo + valor+ "-" +document.getElementById("p"+divs+i).value + ";";
+	  			}
+	  			cont=cont+1;
+	  			if(cont==1)
+	  				preguntas = preguntas + cont + ":"+ txtArea + "|"  + cuerpo;
+	  			else
+	  				preguntas = preguntas + "*" + cont + ":"+ txtArea + "|"  + cuerpo;
+	  			alert("Pregunta Guardada");
+	  		 }
+	  		 
+	  		 function Enviar(){
+	  		 	//alert(document.getElementById("Nombre").value+document.formul.mesin.options[document.getElementById("mesin").selectedIndex].value document.getElementById("mesin").selectedIndex+preguntas);
+	  		 }
+		    
+		     function getVarsUrl(){
+			    var url= location.search.replace("?", "");
+			    var arrUrl = url.split("&");
+			    var urlObj={};   
+			    for(var i=0; i<arrUrl.length; i++){
+			        var x= arrUrl[i].split("=");
+			        urlObj[x[0]]=x[1]
+			    }
+			    return urlObj;
+			}
+			
+			function callWebService(Nombre, Entidad){     
+				var url = ip+"RegistroCurso.php?";
+			    x$.data = {}; 
+			    x$("#html_element_name").xhr((url),
+			       { method:'post',
+			         headers:{'Content-Type':'application/xml'},
+			         data:'Nombre='+Nombre+'&Entidad='+Entidad+'&Id='+getVarsUrl().id,
+			         error: function(){//handle errors here
+			         alert('error');
+			          },
+			         callback: function(){
+			         var json = JSON.stringify(eval("(" + this.responseText + ")"));
+					 var obj = JSON.parse(json);
+					 if(obj.success!=1){
+		            	var div = document.getElementById ("Msj");
+	  					div.innerHTML = "<h4><font color='red'>No se pudo registrar<br> verifique su conexion</font></h4>";
+		             }else{
+			         		if (confirm('Quiere registrar mas cursos?')) {
+							    var div = document.getElementById ("Msj");
+	  							div.innerHTML = "";
+	  							document.Nombre.value = "";
+	  							document.Entidad.value = "";
+	  							
+							} else {
+							    location.href = "PerfilCatedratico.html?id="+getVarsUrl().id;
+							}
+				           }
+				       }    
+				       });
+				   
+			    }
+			
+			
+        </script>
+       
+</head>
+<body background="img/Fondo.jpg">
+<h1>QuizSa <img src="img/Logo.png" width=60px  height=60px></h1>
+
+	<h1>Gestion de Quiz's</h1>
+	<font Color="white">Nombre del examen</font><br>
+	<input type="text" id="Nombre"><br>
+	<font Color="white">Fecha de Inicio</font><br>
+	<select id="mesin">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	</select> /
+	<select id="diain">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	  <option value="24">24</option>
+	  <option value="25">25</option>
+	  <option value="26">26</option>
+	  <option value="27">27</option>
+	  <option value="28">28</option>
+	  <option value="29">29</option>
+	  <option value="30">30</option>
+	  <option value="31">31</option>
+	  <option value="32">32</option>
+	</select> /
+	<select id="anioin">
+	  <option value="2014">2014</option>
+	  <option value="2015">2015</option>
+	  <option value="2016">2016</option>
+	  <option value="2017">2017</option>
+	  <option value="2018">2018</option>
+	  <option value="2019">2019</option>
+	  <option value="2020">2020</option>
+	  <option value="2021">2021</option>
+	  <option value="2022">2022</option>
+	  <option value="2023">2023</option>
+	  <option value="2024">2024</option>
+	  <option value="2025">2025</option>
+	</select> 
+	<br>
+	<font Color="white">Hora inicio</font><br>
+	<select id="horain">
+	  <option value="00">00</option>
+	  <option value="01">01</option>
+	  <option value="03">03</option>
+	  <option value="04">04</option>
+	  <option value="05">05</option>
+	  <option value="06">06</option>
+	  <option value="07">07</option>
+	  <option value="08">08</option>
+	  <option value="09">09</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	</select> :
+	<select id="minin">
+	  <option value="00">00</option>
+	  <option value="01">01</option>
+	  <option value="03">03</option>
+	  <option value="04">04</option>
+	  <option value="05">05</option>
+	  <option value="06">06</option>
+	  <option value="07">07</option>
+	  <option value="08">08</option>
+	  <option value="09">09</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	  <option value="24">24</option>
+	  <option value="25">25</option>
+	  <option value="26">26</option>
+	  <option value="27">27</option>
+	  <option value="28">28</option>
+	  <option value="29">29</option>
+	  <option value="30">30</option>
+	  <option value="31">31</option>
+	  <option value="32">32</option>
+	  <option value="33">33</option>
+	  <option value="34">34</option>
+	  <option value="35">35</option>
+	  <option value="36">36</option>
+	  <option value="37">37</option>
+	  <option value="38">38</option>
+	  <option value="39">39</option>
+	  <option value="40">40</option>
+	  <option value="41">41</option>
+	  <option value="42">42</option>
+	  <option value="43">43</option>
+	  <option value="44">44</option>
+	  <option value="45">45</option>
+	  <option value="46">46</option>
+	  <option value="47">47</option>
+	  <option value="48">48</option>
+	  <option value="49">49</option>
+	  <option value="50">50</option>
+	  <option value="51">51</option>
+	  <option value="52">52</option>
+	  <option value="53">53</option>
+	  <option value="54">54</option>
+	  <option value="55">55</option>
+	  <option value="56">56</option>
+	  <option value="57">57</option>
+	  <option value="58">58</option>
+	  <option value="59">59</option>
+	</select>
+	<br>
+	<font Color="white">Fecha Finalizacion</font><br>
+	<select id="mesfin">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	</select> /
+	<select id="diafin">
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	  <option value="24">24</option>
+	  <option value="25">25</option>
+	  <option value="26">26</option>
+	  <option value="27">27</option>
+	  <option value="28">28</option>
+	  <option value="29">29</option>
+	  <option value="30">30</option>
+	  <option value="31">31</option>
+	  <option value="32">32</option>
+	</select> /
+	<select id="aniofin">
+	  <option value="2014">2014</option>
+	  <option value="2015">2015</option>
+	  <option value="2016">2016</option>
+	  <option value="2017">2017</option>
+	  <option value="2018">2018</option>
+	  <option value="2019">2019</option>
+	  <option value="2020">2020</option>
+	  <option value="2021">2021</option>
+	  <option value="2022">2022</option>
+	  <option value="2023">2023</option>
+	  <option value="2024">2024</option>
+	  <option value="2025">2025</option>
+	</select> 
+	<br>
+	<font Color="white">Hora finalizacion</font><br>
+	<select id="horafin">
+	  <option value="00">00</option>
+	  <option value="01">01</option>
+	  <option value="03">03</option>
+	  <option value="04">04</option>
+	  <option value="05">05</option>
+	  <option value="06">06</option>
+	  <option value="07">07</option>
+	  <option value="08">08</option>
+	  <option value="09">09</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	</select> :
+	<select id="minfin">
+	  <option value="00">00</option>
+	  <option value="01">01</option>
+	  <option value="03">03</option>
+	  <option value="04">04</option>
+	  <option value="05">05</option>
+	  <option value="06">06</option>
+	  <option value="07">07</option>
+	  <option value="08">08</option>
+	  <option value="09">09</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	  <option value="13">13</option>
+	  <option value="14">14</option>
+	  <option value="15">15</option>
+	  <option value="16">16</option>
+	  <option value="17">17</option>
+	  <option value="18">18</option>
+	  <option value="19">19</option>
+	  <option value="20">20</option>
+	  <option value="21">21</option>
+	  <option value="22">22</option>
+	  <option value="23">23</option>
+	  <option value="24">24</option>
+	  <option value="25">25</option>
+	  <option value="26">26</option>
+	  <option value="27">27</option>
+	  <option value="28">28</option>
+	  <option value="29">29</option>
+	  <option value="30">30</option>
+	  <option value="31">31</option>
+	  <option value="32">32</option>
+	  <option value="33">33</option>
+	  <option value="34">34</option>
+	  <option value="35">35</option>
+	  <option value="36">36</option>
+	  <option value="37">37</option>
+	  <option value="38">38</option>
+	  <option value="39">39</option>
+	  <option value="40">40</option>
+	  <option value="41">41</option>
+	  <option value="42">42</option>
+	  <option value="43">43</option>
+	  <option value="44">44</option>
+	  <option value="45">45</option>
+	  <option value="46">46</option>
+	  <option value="47">47</option>
+	  <option value="48">48</option>
+	  <option value="49">49</option>
+	  <option value="50">50</option>
+	  <option value="51">51</option>
+	  <option value="52">52</option>
+	  <option value="53">53</option>
+	  <option value="54">54</option>
+	  <option value="55">55</option>
+	  <option value="56">56</option>
+	  <option value="57">57</option>
+	  <option value="58">58</option>
+	  <option value="59">59</option>
+	</select>
+	<br>
+	<font Color="white">Cuantas preguntas?</font><br>
+	<input type="text" id="QC" class="Conf"><input type="button" onclick="CuantasPreguntas()" value="Crear">
+	<br>
+	<div id="Quiz"></div>
+	<br>
+	<input type="button" onclick="Enviar()" value="Guardar Examen">
+</body>
+</html>

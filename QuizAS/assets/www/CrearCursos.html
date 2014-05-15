@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/Plantilla.css">
+<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script> 
+<script type="text/javascript" src="js/xui-2.3.2.js"></script>
+<script type="text/javascript" src="js/Globales.js"></script>
+<script type="text/javascript">
+			
+			
+			function GestionarCurso() {
+				txtNombre = document.getElementById("Nombre").value;
+				txtEntidad = document.getElementById("Entidad").value;
+				if (txtEntidad.length == 0)
+					txtEntidad='sin entidad'; 
+		        if (txtNombre.length == 0) {
+		            var div = document.getElementById ("Msj");
+			  		div.innerHTML = "<font color='red'>Falta el Nombre<br> del curso</font>";
+				}else
+					callWebService(txtNombre, txtEntidad);
+							
+		    }
+		    
+		     function getVarsUrl(){
+			    var url= location.search.replace("?", "");
+			    var arrUrl = url.split("&");
+			    var urlObj={};   
+			    for(var i=0; i<arrUrl.length; i++){
+			        var x= arrUrl[i].split("=");
+			        urlObj[x[0]]=x[1]
+			    }
+			    return urlObj;
+			}
+			
+			function callWebService(Nombre, Entidad){     
+				var url = ip+"RegistroCurso.php?";
+			    x$.data = {}; 
+			    x$("#html_element_name").xhr((url),
+			       { method:'post',
+			         headers:{'Content-Type':'application/xml'},
+			         data:'Nombre='+Nombre+'&Entidad='+Entidad+'&Id='+getVarsUrl().id,
+			         error: function(){//handle errors here
+			         alert('error');
+			          },
+			         callback: function(){
+			         var json = JSON.stringify(eval("(" + this.responseText + ")"));
+					 var obj = JSON.parse(json);
+					 if(obj.success!=1){
+		            	var div = document.getElementById ("Msj");
+	  					div.innerHTML = "<h4><font color='red'>No se pudo registrar<br> verifique su conexion</font></h4>";
+		             }else{
+			         		if (confirm('Quiere registrar mas cursos?')) {
+							    var div = document.getElementById ("Msj");
+	  							div.innerHTML = "";
+	  							document.Nombre.value = "";
+	  							document.Entidad.value = "";
+	  							
+							} else {
+							    location.href = "PerfilCatedratico.html?id="+getVarsUrl().id;
+							}
+				           }
+				       }    
+				       });
+				   
+			    }
+			
+			
+        </script>
+       
+</head>
+<body background="img/Fondo.jpg">
+<h1>QuizSa <img src="img/Logo.png" width=60px  height=60px></h1>
+
+	<h1>Gestion de Cursos</h1>
+	<table >
+		<tr>
+			<td>
+				Nombre del Curso
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" class="Text" id='Nombre'>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Entidad asociada
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" class="Text" id='Entidad'>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" onclick="GestionarCurso()" value="Gestionar Curso" class="boton">
+			</td>
+		</tr>
+	</table>
+	<br>
+	<br>
+	<div id="Msj"></div>
+</body>
+</html>

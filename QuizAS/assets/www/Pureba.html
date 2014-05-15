@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+   <script type="text/javascript" charset="utf-8">
+ 
+   // Wait for PhoneGap to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+        // specify contact search criteria
+        var options = new ContactFindOptions();
+        options.filter="";          // empty search string returns all contacts
+        options.multiple=true;      // return multiple results
+        filter = ["displayName"];   // return contact.displayName field
+
+        // find contacts
+        navigator.contacts.find(filter, onSuccess, onError, options);
+    }
+
+    // onSuccess: Get a snapshot of the current contacts
+    //
+    function onSuccess(contacts) {
+        var todos;
+        for (var i=0; i<contacts.length; i++) {
+            if(contacts[i].displayName!=null)
+            todos = todos+ '<br>'+contacts[i].displayName+' '+contacts[i].emails;
+        }
+        var div = document.getElementById ("Msj");
+	    div.innerHTML = todos;
+					           
+    };
+
+    // onError: Failed to get the contacts
+    //
+    function onError(contactError) {
+        alert('onError!');
+    }
+
+    </script>
+  </head>
+  <body>
+    <h1>Example</h1>
+    <p>Find Contacts</p>
+    <div id="Msj"></div> 
+  </body>
+</html>

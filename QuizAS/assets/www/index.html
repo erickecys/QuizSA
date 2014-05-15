@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/Plantilla.css">
+<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script> 
+<script type="text/javascript" src="js/xui-2.3.2.js"></script>
+<script type="text/javascript" src="js/Globales.js"></script>
+<script type="text/javascript">
+		
+			function callWebService(){
+					var url = ip+"Login.php?";
+				   x$.data = {};
+				    x$("#html_element_name").xhr((url),
+				       { method:'post',
+				         headers:{'Content-Type':'application/xml'},
+				         data:'Registro='+document.getElementById('Usuario').value+'&Clave='+document.getElementById('Clave').value+'&Rol='+document.getElementById('Rol').value,
+				         error: function(){//handle errors here
+				         alert('error');
+				          },
+				         callback: function(){
+				           //do whatever you want
+				           //you can access response text as "this.responseText"
+				             var json = JSON.stringify(eval("(" + this.responseText + ")"));
+   						 	 var obj = JSON.parse(json);
+	   						  if(obj.success!=1){
+					            	var div = document.getElementById ("Msj");
+				  					div.innerHTML = "<h4><font color='red'>Error al ingresar <br>la informacion</font></h4>";
+					             }else{
+					                var Rol = document.getElementById ("Rol").value;
+					                
+					                if(Rol==1){
+					                	location.href = "PerfilCatedratico.html?id="+obj.codigo;
+					                }else{
+					                 	location.href = "PerfilEstudiante.html?id="+obj.codigo;
+					                } 	
+					             } 
+				       }    
+				       });
+				   
+			    }
+			    function registro(){
+			    	location.href = "Registro1.html"
+			    }
+</script>			    
+</head>
+<body background="img/Fondo.jpg">
+<h1>QuizSa <img src="img/Logo.png" width=60px  height=60px></h1>
+<table border=0>
+	<tr>
+		<td>
+			Usuario:
+		</td>
+		<td>
+			<input type="text" id="Usuario" class="Text" >
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Clave:
+		</td>
+		<td>
+			<input type="password" id="Clave" class="Text">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Rol:
+		</td>
+		<td>
+			<select id="Rol" class="Text">
+				<option value="2">Estudiante</option>
+				<option value="1">Catedratico</option>
+			</select>
+		</td>
+	</tr>
+</table>
+	<br>	
+	<input type="button" onclick='callWebService()' value="Entrar" class="boton">
+	<br>
+	<br>
+	<input type="button" onclick='registro()' value="Registrar" class="boton">
+	<br>
+	<br>
+	<div id="Msj"></div> 
+	
+</body>
+</html>

@@ -1,0 +1,57 @@
+@CHARSET "ISO-8859-1";
+body{
+	background-color: #ffffff;
+    font-family:  'Open Sans', Arial, Helvetice Neue, sans-serif;
+    font-size: 20px;
+	color: #ffffff;
+	font-weight: 300; 
+	font-style: normal; 
+	
+}
+
+h1{
+	font-family:"Times New Roman";
+	color: #ffffff;
+	 font-size: 40px;
+	 
+}
+
+p{
+	font-family:"Times New Roman";
+	font-size:20px;
+}
+ .boton{
+        font-size:16px;
+        font-family:Verdana,Helvetica;
+        font-weight:bold;
+        color:#638cb5;
+        background:white;
+        border:0px;
+        width:200px;
+        height:40px;
+        position:fixed;
+		left:25px;
+       }
+
+ .Text{
+        font-size:20px;
+        font-family:Verdana,Helvetica;
+        font-weight:bold;
+        color:#638cb5;
+        background:white;
+        border:5px;
+        width:150px;
+        height:23px;
+       }
+       
+ .Conf{
+        font-size:20px;
+        font-family:Verdana,Helvetica;
+        font-weight:bold;
+        color:#638cb5;
+        background:white;
+        border:5px;
+        width:30px;
+        height:23px;
+       }      
+       
