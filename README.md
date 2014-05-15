@@ -14,4 +14,4 @@ Jose Miguel Villatoro Hidalgo  | 200819119
 
 ## Procesos BPMN
 
-![01 Flujo General Catedratico](https://raw.github.com/erickecys/QuizSA/master/imagenes/01 Flujo General Catedratico.png "01 Flujo General Catedratico")
+![Ejemplo1.1](https://raw.github.com/erickecys/QuizSA/QuizAS/imagenes/01_Flujo_General_Catedratico.png "Ejemplo1.1")
